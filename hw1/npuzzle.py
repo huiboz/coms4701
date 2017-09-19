@@ -6,7 +6,7 @@ for solving the n-Puzzle, which is a generalization of the 8 and 15 puzzle to
 squares of arbitrary size (we will only test it with 8-puzzles for now).
 See Courseworks for detailed instructions.
 
-@author: Huibo Zhao (hz2480)
+@author: YOUR NAME (YOUR UNI)
 """
 
 import time
@@ -60,14 +60,15 @@ def get_successors(state):
                 row = i;
                 column = j;
 
-    if (row>0):
-        child_states.append(("Down",swap_cells(state,row,column,row-1,column)))
-    if (row<2):
-        child_states.append(("Up",swap_cells(state,row,column,row+1,column)))
-    if (column>0):
-        child_states.append(("Right",swap_cells(state,row,column,row,column-1)))
+
     if (column<2):
         child_states.append(("Left",swap_cells(state,row,column,row,column+1)))
+    if (column>0):
+        child_states.append(("Right",swap_cells(state,row,column,row,column-1)))
+    if (row<2):
+        child_states.append(("Up",swap_cells(state,row,column,row+1,column)))
+    if (row>0):
+        child_states.append(("Down",swap_cells(state,row,column,row-1,column)))
 
     return child_states
 
@@ -82,7 +83,6 @@ def goal_test(state):
         return False
     else:
         return True
-
 
 
 def bfs(state):
@@ -111,15 +111,13 @@ def bfs(state):
 
 def dfs(state):
     """
-    Breadth first search.
+    Depth first search.
     Returns three values: A list of actions, the number of states expanded, and
     the maximum size of the frontier.
     """
 
     parents = {}
     actions = {}
-    costs = {}
-    costs[state] = 0
 
     states_expanded = 0
     max_frontier = 0
@@ -241,10 +239,10 @@ if __name__ == "__main__":
     print()
 
     print("====BFS====")
-    solution, states_expanded, max_frontier = bfs(test_state) #
     start = time.time()
-    print_result(solution, states_expanded, max_frontier)
+    solution, states_expanded, max_frontier = bfs(test_state) #
     end = time.time()
+    print_result(solution, states_expanded, max_frontier)
     if solution is not None:
         print(solution)
     print("Total time: {0:.3f}s".format(end-start))
