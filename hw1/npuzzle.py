@@ -84,6 +84,16 @@ def goal_test(state):
     else:
         return True
 
+# recover the solution
+def recover(parents,actions,state):
+    result = []
+    current_state = state
+
+    while current_state in parents:
+        result.insert(0,actions[current_state])
+        current_state = parents[current_state]
+
+    return result
 
 def bfs(state):
     """
@@ -100,10 +110,31 @@ def bfs(state):
     #YOUR CODE HERE
 
     #Hint: You may start with this:
-    # frontier = [state]
-    # explored = set()
-    # seen = set()
-    # seen.add(state)
+    frontier = [state]
+    explored = set()
+    seen = set()
+    seen.add(state)
+
+    while frontier:
+        max_frontier = max(max_frontier,len(frontier))
+        leaf_node = frontier.pop(0)
+        explored.add(leaf_node)
+
+        if goal_test(leaf_node) is True:
+            states_expanded = len(explored)
+            action_recovers = recover(parents,actions,leaf_node)
+            return action_recovers, states_expanded, max_frontier
+
+
+        successors = get_successors(leaf_node)
+        for i in range(len(successors)):
+            current_state = successors[i][1]
+            if current_state not in explored and current_state not in seen:
+                frontier.append(current_state)
+                seen.add(current_state)
+                parents[current_state] = leaf_node
+                actions[current_state] = successors[i][0]
+
 
     #  return solution, states_expanded, max_frontier
     return None, states_expanded, max_frontier # No solution found
@@ -123,6 +154,32 @@ def dfs(state):
     max_frontier = 0
 
     #YOUR CODE HERE
+
+    frontier = [state]
+    explored = set()
+    seen = set()
+    seen.add(state)
+
+    while frontier:
+        max_frontier = max(max_frontier,len(frontier))
+        leaf_node = frontier.pop()
+        explored.add(leaf_node)
+
+        if goal_test(leaf_node) is True:
+            states_expanded = len(explored)
+            action_recovers = recover(parents,actions,leaf_node)
+            return action_recovers, states_expanded, max_frontier
+
+
+        successors = get_successors(leaf_node)
+        for i in range(len(successors)):
+            current_state = successors[i][1]
+            if current_state not in explored and current_state not in seen:
+                frontier.append(current_state)
+                seen.add(current_state)
+                parents[current_state] = leaf_node
+                actions[current_state] = successors[i][0]
+
 
     #  return solution, states_expanded, max_frontier
 
@@ -226,17 +283,21 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
+    '''
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
+    '''
 
     #More difficult test case
-    #test_state = ((7, 2, 4),
-    #              (5, 0, 6),
-    #              (8, 3, 1))
+    test_state = ((7, 2, 4),
+                  (5, 0, 6),
+                  (8, 3, 1))
+
 
     print(state_to_string(test_state))
     print()
+
 
     print("====BFS====")
     start = time.time()
@@ -247,13 +308,16 @@ if __name__ == "__main__":
         print(solution)
     print("Total time: {0:.3f}s".format(end-start))
 
-    #print()
-    #print("====DFS====")
-    #start = time.time()
-    #solution, states_expanded, max_frontier = dfs(test_state)
-    #end = time.time()
-    #print_result(solution, states_expanded, max_frontier)
-    #print("Total time: {0:.3f}s".format(end-start))
+
+
+    print()
+    print("====DFS====")
+    start = time.time()
+    solution, states_expanded, max_frontier = dfs(test_state)
+    end = time.time()
+    print_result(solution, states_expanded, max_frontier)
+    print("Total time: {0:.3f}s".format(end-start))
+
 
     #print()
     #print("====Greedy Best-First (Misplaced Tiles Heuristic)====")
