@@ -192,7 +192,14 @@ def misplaced_heuristic(state):
     """
 
     #YOUR CODE HERE
-    return 0 # replace this
+    misplace = 0
+    for i in range(0,3):
+        for j in range(0,3):
+            expected_num = i * 3 + j
+            if (state[i][j] != expected_num):
+                misplace+=1
+
+    return misplace # replace this
 
 
 def manhattan_heuristic(state):
@@ -283,7 +290,7 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-    
+
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
@@ -298,7 +305,7 @@ if __name__ == "__main__":
     print(state_to_string(test_state))
     print()
 
-
+'''
     print("====BFS====")
     start = time.time()
     solution, states_expanded, max_frontier = bfs(test_state) #
@@ -317,7 +324,7 @@ if __name__ == "__main__":
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
     print("Total time: {0:.3f}s".format(end-start))
-
+'''
 
     #print()
     #print("====Greedy Best-First (Misplaced Tiles Heuristic)====")
