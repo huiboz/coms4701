@@ -235,8 +235,31 @@ def best_first(state, heuristic = misplaced_heuristic):
     # The following line computes the heuristic for a state
     # by calling the heuristic function passed as a parameter.
     # f = heuristic(state)
+    frontier = [(costs[state],state)]
+    explored = set()
+    seen = set()
+    seen.add(state)
 
     #  return solution, states_expanded, max_frontier
+    while frontier:
+        max_frontier = max(max_frontier,len(frontier))
+        leaf_node = heappop(frontier)[1]
+        explored.add(leaf_node)
+
+        if goal_test(leaf_node) is True:
+            states_expanded = len(explored)
+            action_recovers = recover(parents,actions,leaf_node)
+            return action_recovers, states_expanded, max_frontier
+
+        successors = get_successors(leaf_node)
+        for i in range(len(successors)):
+            current_state = successors[i][1]
+            if current_state not in explored and current_state not in seen:
+                costs[current_state] = heuristic(current_state)
+                heappush(frontier,(costs[current_state],current_state))
+                seen.add(current_state)
+                parents[current_state] = leaf_node
+                actions[current_state] = successors[i][0]
 
     return None, 0, 0
 
@@ -305,7 +328,7 @@ if __name__ == "__main__":
     print(state_to_string(test_state))
     print()
 
-'''
+    '''
     print("====BFS====")
     start = time.time()
     solution, states_expanded, max_frontier = bfs(test_state) #
@@ -324,15 +347,15 @@ if __name__ == "__main__":
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
     print("Total time: {0:.3f}s".format(end-start))
-'''
+    '''
 
-    #print()
-    #print("====Greedy Best-First (Misplaced Tiles Heuristic)====")
-    #start = time.time()
-    #solution, states_expanded, max_frontier = best_first(test_state, misplaced_heuristic)
-    #end = time.time()
-    #print_result(solution, states_expanded, max_frontier)
-    #print("Total time: {0:.3f}s".format(end-start))
+    print()
+    print("====Greedy Best-First (Misplaced Tiles Heuristic)====")
+    start = time.time()
+    solution, states_expanded, max_frontier = best_first(test_state, misplaced_heuristic)
+    end = time.time()
+    print_result(solution, states_expanded, max_frontier)
+    print("Total time: {0:.3f}s".format(end-start))
 
     #print()
     #print("====A* (Misplaced Tiles Heuristic)====")
