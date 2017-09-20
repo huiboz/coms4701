@@ -275,7 +275,7 @@ def print_result(solution, states_expanded, max_frontier):
         print("No solution found.")
     else:
         print("Solution has {} actions.".format(len(solution)))
-    print("Total states exppanded: {}.".format(states_expanded))
+    print("Total states expanded: {}.".format(states_expanded))
     print("Max frontier size: {}.".format(max_frontier))
 
 
@@ -283,7 +283,7 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-    '''
+    
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
@@ -293,7 +293,7 @@ if __name__ == "__main__":
     test_state = ((7, 2, 4),
                   (5, 0, 6),
                   (8, 3, 1))
-
+                  '''
 
     print(state_to_string(test_state))
     print()
