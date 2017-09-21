@@ -251,7 +251,7 @@ def best_first(state, heuristic = misplaced_heuristic):
     #  return solution, states_expanded, max_frontier
     while frontier:
         max_frontier = max(max_frontier,len(frontier))
-        leaf_node = heappop(frontier)[1]
+        leaf_node = (heappop(frontier))[1]
         explored.add(leaf_node)
 
         if goal_test(leaf_node) is True:
@@ -309,7 +309,7 @@ def astar(state, heuristic = misplaced_heuristic):
     #  return solution, states_expanded, max_frontier
     while frontier:
         max_frontier = max(max_frontier,len(frontier))
-        leaf_node = heappop(frontier)[1]
+        leaf_node = (heappop(frontier))[1]
         explored.add(leaf_node)
 
         if goal_test(leaf_node) is True:
@@ -317,7 +317,6 @@ def astar(state, heuristic = misplaced_heuristic):
             action_recovers = recover(parents,actions,leaf_node)
             return action_recovers, states_expanded, max_frontier
 
-            # TODO: check
         successors = get_successors(leaf_node)
         for i in range(len(successors)):
             current_state = successors[i][1]
@@ -333,7 +332,7 @@ def astar(state, heuristic = misplaced_heuristic):
                     parents[current_state] = leaf_node
                     actions[current_state] = successors[i][0]
                 else:
-                    if total_cost < costs[current_state]:
+                    if total_cost <= costs[current_state]:  # update!
                         frontier.remove((costs[current_state],current_state))
                         costs[current_state] = total_cost
                         heappush(frontier,(costs[current_state],current_state))
@@ -360,17 +359,21 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-
+    '''
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
     '''
-
+    '''
     #More difficult test case
     test_state = ((7, 2, 4),
                   (5, 0, 6),
                   (8, 3, 1))
-'''
+    '''
+
+    test_state = ((7, 2, 4),
+                  (5, 0, 6),
+                  (8, 3, 1))
 
     print(state_to_string(test_state))
     print()
@@ -410,6 +413,8 @@ if __name__ == "__main__":
     solution, states_expanded, max_frontier = astar(test_state, misplaced_heuristic)
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
+    if solution is not None:
+        print(solution)
     print("Total time: {0:.3f}s".format(end-start))
 
     print()
@@ -418,4 +423,6 @@ if __name__ == "__main__":
     solution, states_expanded, max_frontier = astar(test_state, manhattan_heuristic)
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
+    if solution is not None:
+        print(solution)
     print("Total time: {0:.3f}s".format(end-start))
