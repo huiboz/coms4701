@@ -232,9 +232,7 @@ def best_first(state, heuristic = misplaced_heuristic):
 
     #YOUR CODE HERE
 
-    # The following line computes the heuristic for a state
-    # by calling the heuristic function passed as a parameter.
-    # f = heuristic(state)
+
     frontier = [(costs[state],state)]
     explored = set()
     seen = set()
@@ -261,7 +259,7 @@ def best_first(state, heuristic = misplaced_heuristic):
                 parents[current_state] = leaf_node
                 actions[current_state] = successors[i][0]
 
-    return None, 0, 0
+    return None, states_expanded, max_frontier
 
 
 def astar(state, heuristic = misplaced_heuristic):
@@ -293,7 +291,46 @@ def astar(state, heuristic = misplaced_heuristic):
     # solution path:
     #  solution = get_solution(state, parents, actions, costs)
     #  return solution, states_expanded, max_frontier
+    frontier = [(costs[state],state)]
+    explored = set()
+    seen = set()
+    seen.add(state)
 
+    #  return solution, states_expanded, max_frontier
+    while frontier:
+        max_frontier = max(max_frontier,len(frontier))
+        leaf_node = heappop(frontier)[1]
+        explored.add(leaf_node)
+
+        if goal_test(leaf_node) is True:
+            states_expanded = len(explored)
+            action_recovers = recover(parents,actions,leaf_node)
+            return action_recovers, states_expanded, max_frontier
+
+            # TODO: check
+        successors = get_successors(leaf_node)
+        for i in range(len(successors)):
+            current_state = successors[i][1]
+            if current_state not in explored:
+                hcost = heuristic(current_state)
+                ccost = 1 + costs[leaf_node]
+                total_cost = hcost + ccost
+
+                if current_state not in seen:
+                    costs[current_state] = total_cost
+                    heappush(frontier,(costs[current_state],current_state))
+                    seen.add(current_state)
+                    parents[current_state] = leaf_node
+                    actions[current_state] = successors[i][0]
+                else:
+                    if total_cost < costs[current_state]:
+                        frontier.remove((costs[current_state],current_state))
+                        costs[current_state] = total_cost
+                        heappush(frontier,(costs[current_state],current_state))
+                        parents[current_state] = leaf_node
+                        actions[current_state] = successors[i][0]
+
+    #return None, 0, 0
     return None, states_expanded, max_frontier # No solution found
 
 
@@ -313,7 +350,7 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-
+    '''
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
@@ -323,19 +360,19 @@ if __name__ == "__main__":
     test_state = ((7, 2, 4),
                   (5, 0, 6),
                   (8, 3, 1))
-                  '''
+
 
     print(state_to_string(test_state))
     print()
 
-    '''
+
     print("====BFS====")
     start = time.time()
     solution, states_expanded, max_frontier = bfs(test_state) #
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
-    if solution is not None:
-        print(solution)
+    #if solution is not None:
+    #    print(solution)
     print("Total time: {0:.3f}s".format(end-start))
 
 
@@ -347,7 +384,7 @@ if __name__ == "__main__":
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
     print("Total time: {0:.3f}s".format(end-start))
-    '''
+
 
     print()
     print("====Greedy Best-First (Misplaced Tiles Heuristic)====")
@@ -357,13 +394,13 @@ if __name__ == "__main__":
     print_result(solution, states_expanded, max_frontier)
     print("Total time: {0:.3f}s".format(end-start))
 
-    #print()
-    #print("====A* (Misplaced Tiles Heuristic)====")
-    #start = time.time()
-    #solution, states_expanded, max_frontier = astar(test_state, misplaced_heuristic)
-    #end = time.time()
-    #print_result(solution, states_expanded, max_frontier)
-    #print("Total time: {0:.3f}s".format(end-start))
+    print()
+    print("====A* (Misplaced Tiles Heuristic)====")
+    start = time.time()
+    solution, states_expanded, max_frontier = astar(test_state, misplaced_heuristic)
+    end = time.time()
+    print_result(solution, states_expanded, max_frontier)
+    print("Total time: {0:.3f}s".format(end-start))
 
     #print()
     #print("====A* (Total Manhattan Distance Heuristic)====")
