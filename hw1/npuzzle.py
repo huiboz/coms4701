@@ -321,9 +321,9 @@ def astar(state, heuristic = misplaced_heuristic):
         for i in range(len(successors)):
             current_state = successors[i][1]
             if current_state not in explored:
-                hcost = heuristic(current_state)
-                ccost = 1 + costs[leaf_node]
-                total_cost = hcost + ccost
+                hcost = heuristic(current_state) #
+                ccost = 1 + costs[leaf_node] - heuristic(leaf_node)
+                total_cost = hcost + ccost # f(n) = cost(state) + heuristic(state)
 
                 if current_state not in seen:
                     costs[current_state] = total_cost
@@ -332,14 +332,13 @@ def astar(state, heuristic = misplaced_heuristic):
                     parents[current_state] = leaf_node
                     actions[current_state] = successors[i][0]
                 else:
-                    if total_cost <= costs[current_state]:  # update!
+                    if total_cost < costs[current_state]:  # update!
                         frontier.remove((costs[current_state],current_state))
+                        heappush(frontier,(total_cost,current_state))
                         costs[current_state] = total_cost
-                        heappush(frontier,(costs[current_state],current_state))
                         parents[current_state] = leaf_node
                         actions[current_state] = successors[i][0]
 
-    #return None, 0, 0
     return None, states_expanded, max_frontier # No solution found
 
 
@@ -413,8 +412,6 @@ if __name__ == "__main__":
     solution, states_expanded, max_frontier = astar(test_state, misplaced_heuristic)
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
-    if solution is not None:
-        print(solution)
     print("Total time: {0:.3f}s".format(end-start))
 
     print()
@@ -423,6 +420,4 @@ if __name__ == "__main__":
     solution, states_expanded, max_frontier = astar(test_state, manhattan_heuristic)
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
-    if solution is not None:
-        print(solution)
     print("Total time: {0:.3f}s".format(end-start))
