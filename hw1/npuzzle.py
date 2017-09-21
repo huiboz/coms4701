@@ -199,7 +199,7 @@ def misplaced_heuristic(state):
             if (state[i][j] != expected_num):
                 misplace+=1
 
-    return misplace # replace this
+    return misplace
 
 
 def manhattan_heuristic(state):
@@ -207,8 +207,18 @@ def manhattan_heuristic(state):
     For each misplaced tile, compute the manhattan distance between the current
     position and the goal position. THen sum all distances.
     """
+    cost = 0
 
-    return 0 # replace this
+    for num in range(1,9):
+        for i in range(0,3):
+            for j in range(0,3):
+                if (state[i][j] == num):
+                    original_row = num//3
+                    original_column = num%3
+                    cost += abs(i-original_row)
+                    cost += abs(j-original_column)
+
+    return cost
 
 
 def best_first(state, heuristic = misplaced_heuristic):
@@ -350,7 +360,7 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-    '''
+
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
@@ -360,7 +370,7 @@ if __name__ == "__main__":
     test_state = ((7, 2, 4),
                   (5, 0, 6),
                   (8, 3, 1))
-
+'''
 
     print(state_to_string(test_state))
     print()
@@ -402,10 +412,10 @@ if __name__ == "__main__":
     print_result(solution, states_expanded, max_frontier)
     print("Total time: {0:.3f}s".format(end-start))
 
-    #print()
-    #print("====A* (Total Manhattan Distance Heuristic)====")
-    #start = time.time()
-    #solution, states_expanded, max_frontier = astar(test_state, manhattan_heuristic)
-    #end = time.time()
-    #print_result(solution, states_expanded, max_frontier)
-    #print("Total time: {0:.3f}s".format(end-start))
+    print()
+    print("====A* (Total Manhattan Distance Heuristic)====")
+    start = time.time()
+    solution, states_expanded, max_frontier = astar(test_state, manhattan_heuristic)
+    end = time.time()
+    print_result(solution, states_expanded, max_frontier)
+    print("Total time: {0:.3f}s".format(end-start))
