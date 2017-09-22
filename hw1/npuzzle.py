@@ -6,7 +6,7 @@ for solving the n-Puzzle, which is a generalization of the 8 and 15 puzzle to
 squares of arbitrary size (we will only test it with 8-puzzles for now).
 See Courseworks for detailed instructions.
 
-@author: YOUR NAME (YOUR UNI)
+@author: Huibo Zhao (hz2480)
 """
 
 import time
@@ -248,7 +248,6 @@ def best_first(state, heuristic = misplaced_heuristic):
     seen = set()
     seen.add(state)
 
-    #  return solution, states_expanded, max_frontier
     while frontier:
         max_frontier = max(max_frontier,len(frontier))
         leaf_node = (heappop(frontier))[1]
@@ -262,7 +261,7 @@ def best_first(state, heuristic = misplaced_heuristic):
         successors = get_successors(leaf_node)
         for i in range(len(successors)):
             current_state = successors[i][1]
-            if current_state not in explored and current_state not in seen:
+            if current_state not in seen:
                 costs[current_state] = heuristic(current_state)
                 heappush(frontier,(costs[current_state],current_state))
                 seen.add(current_state)
@@ -293,20 +292,12 @@ def astar(state, heuristic = misplaced_heuristic):
 
     #YOUR CODE HERE
 
-    # The following line computes the heuristic for a state
-    # by calling the heuristic function passed as a parameter.
-    # f = heuristic(state)
 
-    # Use the following two lines to retreive and return the
-    # solution path:
-    #  solution = get_solution(state, parents, actions, costs)
-    #  return solution, states_expanded, max_frontier
     frontier = [(costs[state],state)]
     explored = set()
     seen = set()
     seen.add(state)
 
-    #  return solution, states_expanded, max_frontier
     while frontier:
         max_frontier = max(max_frontier,len(frontier))
         leaf_node = (heappop(frontier))[1]
@@ -321,9 +312,9 @@ def astar(state, heuristic = misplaced_heuristic):
         for i in range(len(successors)):
             current_state = successors[i][1]
             if current_state not in explored:
-                hcost = heuristic(current_state) #
+                hcost = heuristic(current_state)
                 ccost = 1 + costs[leaf_node] - heuristic(leaf_node)
-                total_cost = hcost + ccost # f(n) = cost(state) + heuristic(state)
+                total_cost = hcost + ccost
 
                 if current_state not in seen:
                     costs[current_state] = total_cost
@@ -358,11 +349,11 @@ def print_result(solution, states_expanded, max_frontier):
 if __name__ == "__main__":
 
     #Easy test case
-    '''
+    
     test_state = ((1, 4, 2),
                   (0, 5, 8),
                   (3, 6, 7))
-    '''
+
     '''
     #More difficult test case
     test_state = ((7, 2, 4),
@@ -370,9 +361,7 @@ if __name__ == "__main__":
                   (8, 3, 1))
     '''
 
-    test_state = ((7, 2, 4),
-                  (5, 0, 6),
-                  (8, 3, 1))
+
 
     print(state_to_string(test_state))
     print()
@@ -383,8 +372,8 @@ if __name__ == "__main__":
     solution, states_expanded, max_frontier = bfs(test_state) #
     end = time.time()
     print_result(solution, states_expanded, max_frontier)
-    #if solution is not None:
-    #    print(solution)
+    if solution is not None:
+        print(solution)
     print("Total time: {0:.3f}s".format(end-start))
 
 
