@@ -27,7 +27,7 @@ def minimax_min_node(board, color):
     return None
 
 
-def minimax_max_node(board, color, alpha, beta):
+def minimax_max_node(board, color):
     return None 
 
     
