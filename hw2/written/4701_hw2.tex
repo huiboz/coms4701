@@ -1,0 +1,91 @@
+% --------------------------------------------------------------
+% Basic LaTeX template for homework assignments. 
+% COMS W4701 - Artificial Intelligence 
+% --------------------------------------------------------------
+\documentclass[11pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumerate}
+ 
+\begin{document}
+ 
+%           Your solutions start below this line
+% --------------------------------------------------------------
+ 
+\title{COMS W4701: Artificial Intelligence\\
+       Written Homework 2}
+\author{Huibo Zhao (hz2480)} % replace with your name and UNI
+\maketitle
+
+\section*{Problem 1} 
+ 
+
+Which techniques mentioned in the Wired article are also used in AlphaGo? Which techniques are novel to AlphaGo? \newline
+
+In the wired article, it mentioned that Coulom combined the advantages of tree search and Monte Carlo to form a new algorithm Monte Carlo Tree Search. In AlphaGo, this technique is applied for neural networks as it "simulate thousands of random games of self-play". Another common technique mentioned in both article is that the program will learn from the human. in wired article, the program tried to mimic expert's move whereas AlphaGo trained supervised learning from expert moves.\newline
+
+The new technique in AlphaGo is a search algorithm that combines Monte Carlo simulation with value and policy networks. More specifically, value networks are for evaluating board positions and policy networks are for selecting moves. AlphaGo applied supervised learning and reinforcement learning to enhance these networks. \newline
+\newline
+
+\noindent
+Which problems specific to Go are addressed by each technique? \newline
+
+The huge game's breadth and depth factors makes exhaustive search impossible. People used refined Monte Carlo Tree Search combined with neural networks to narrow the search. \newline
+
+The decision for each move is hard to decide. As introduced in wired article, the movement is not very predictable in professions' levels. An experienced human player may choose an excellent movement by his feeling of the game. However, this feeling is very hard to apply to the program. In wired article, people initially trained program by learning and mimicking professions' moves. AlphaGo used policy networks to select best move. \newline
+
+Also, it is hard to analyze the current game situation for Go. There are just too many factors that will affect evaluating the board configuration. It is hard to quantify them using program. So AlphaGo applied value networks to evaluate board positions. \newline
+
+\noindent
+Why do you think AlphaGo is successful where other Go programs have failed.  \newline
+
+AlphaGo combined different neural networks for evaluating the positions and movements with Monte Carlo Tree Search. In essence, I think it is deep neural networks that make AlphaGo successful.\newline
+
+
+
+\section*{Problem 2}
+
+As shown below \newline
+\begin{table}[!h]
+\label{my-label}
+\begin{tabular}{llllll}
+step & node & $\alpha$  & $\beta$  & result & children skipped \\
+1    & A    & $-\infty$ & $\infty$  & $-\infty$     &                  \\
+2    & B    &  -$\infty$  & $\infty$      &         $\infty$         \\
+3    & E    & $-\infty$ & $\infty$  & 13     &                  \\
+4    & B    & -$\infty$ & 13 & 13     &                  \\
+5    & F    & -$\infty$ & 13 & 4      &                  \\
+6    & B    & -$\infty$ & 4  & 4      &                  \\
+7    & G    & -$\infty$ & 4  & 5      & 8                \\
+8    & B    & -$\infty$ & 4  & 4      &                  \\
+9    & A    & 4  & $\infty$  & 4      &                  \\
+10   & C    & 4  & $\infty$  & $\infty$      &                  \\
+11   & H    & -$\infty$  & $\infty$  & 15     &                  \\
+12   & C    & 4  & 15 & 15     &                  \\
+13   & I    & -$\infty$  & 15 & 7      &                  \\
+14   & C    & 4  & 7  & 7      &                  \\
+15   & J    & -$\infty$ & 7  & 16     & 4, -12           \\
+16   & C    & 4  & 7  & 7      &                  \\
+17   & A    & 7  & $\infty$  & 7      &                  \\
+18   & D    & 7  & $\infty$  & $\infty$      &                  \\
+19   & K    & -$\infty$  & $\infty$  & 11     &                  \\
+20   & D    & 7  & 11 & 11     &                  \\
+21   & L    & -$\infty$  & 11 & 12     & 13, -15          \\
+22   & D    & 7  & 11 & 11     &                  \\
+23   & M    & -$\infty$  & 11 & 19     &                  \\
+24   & D    & 7  & 11 & 11     &                  \\
+25   & A    & 11 & $\infty$  & 11     &                 
+\end{tabular}
+\end{table}
+
+
+\section*{Problem 3}
+
+
+
+
+
+% --------------------------------------------------------------
+ 
+\end{document}
