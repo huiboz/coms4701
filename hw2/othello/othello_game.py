@@ -100,7 +100,7 @@ class OthelloGameManager(object):
         final = []
         for row in board:
             final.append(tuple(row))
-        return board
+        return final
 
     def print_board(self):
         for row in self.board:

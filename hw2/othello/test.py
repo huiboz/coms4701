@@ -47,13 +47,28 @@ def compute_utility(board, color):
     else:
         return white - black;
 
-print ("--------");
-print (compute_utility(board,2));
+#print ("--------");
+#print (compute_utility(board,2));
 
-move=(100,200);
+#print(board);
+#board = (tuple)board;
+#print(type(board));
+a = (board,1);
 
 
-print(move[0]);
+dic = {};
+dic['0'] = 00;
+dic['1'] = 11;
+dic['0'] = 22;
+print(dic);
+
+states = [];
+print(type(states));
+#dic[((tuple)board, 1)] = 3;
+#print(type(dic));
+#print(dic);
+
+#print(move[0]);
 
 #for x in b:
 #    print(x);

@@ -16,6 +16,12 @@ import time
 
 # You can use the functions in othello_shared to write your AI
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
+from heapq import heappush
+from heapq import heappop
+
+####### dictionary ##########
+minimax_dict = {};
+#############################
 
 def compute_utility(board, color):
     black, white = get_score(board);
@@ -28,37 +34,51 @@ def compute_utility(board, color):
 ############ MINIMAX ###############################
 
 def minimax_min_node(board, color):
-    moves = get_possible_moves(board,color);
-    if color == 1:
-        opponent_color = 2;
+    if (board,color) in minimax_dict:
+        return minimax_dict[(board,color)];
     else:
-        opponent_color = 1;
+        moves = get_possible_moves(board,color);
+        if color == 1:
+            opponent_color = 2;
+        else:
+            opponent_color = 1;
 
-    if len(moves)==0: #terminal state
-        return compute_utility(board,opponent_color);
-    else:
-        scores = [];
-        for move in moves:
-            scores.append(minimax_max_node
-            (play_move(board, color, move[0],move[1]),opponent_color));
-    return min(scores)
+        if len(moves)==0: #terminal state
+            utility = compute_utility(board,opponent_color);
+            minimax_dict[(board,color)] = utility;
+            return utility;
+        else:
+            scores = [];
+            for move in moves:
+                scores.append(minimax_max_node
+                (play_move(board, color, move[0],move[1]),opponent_color));
+        minimumScore = min(scores);
+        minimax_dict[(board,color)] = minimumScore;
+        return minimumScore
 
 
 def minimax_max_node(board, color):
-    moves = get_possible_moves(board,color);
-    if color == 1:
-        opponent_color = 2;
+    if (board,color) in minimax_dict:
+        return minimax_dict[(board,color)];
     else:
-        opponent_color = 1;
+        moves = get_possible_moves(board,color);
+        if color == 1:
+            opponent_color = 2;
+        else:
+            opponent_color = 1;
 
-    if len(moves)==0: #terminal state
-        return compute_utility(board,color);
-    else:
-        scores = [];
-        for move in moves:
-            scores.append(minimax_min_node
-            (play_move(board, color, move[0],move[1]),opponent_color));
-    return max(scores)
+        if len(moves)==0: #terminal state
+            utility = compute_utility(board,color);
+            minimax_dict[(board,color)] = utility;
+            return utility;
+        else:
+            scores = [];
+            for move in moves:
+                scores.append(minimax_min_node
+                (play_move(board, color, move[0],move[1]),opponent_color));
+        maximumScore = max(scores);
+        minimax_dict[(board,color)] = maximumScore;
+        return maximumScore
 
 
 def select_move_minimax(board, color):
@@ -74,7 +94,7 @@ def select_move_minimax(board, color):
     i = 0;
     j = 0;
     maximum = -sys.maxsize;
-
+    #sys.stderr.write("---------------\n");
     moves = get_possible_moves(board,color);
     for move in moves:
         score = minimax_min_node(play_move(board,color,move[0],move[1]),
@@ -89,44 +109,72 @@ def select_move_minimax(board, color):
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)
 def alphabeta_min_node(board, color, alpha, beta):
-    moves = get_possible_moves(board,color);
-    if color == 1:
-        opponent_color = 2;
+    if (board,color) in minimax_dict:
+        return minimax_dict[(board,color)];
     else:
-        opponent_color = 1;
+        moves = get_possible_moves(board,color);
+        if color == 1:
+            opponent_color = 2;
+        else:
+            opponent_color = 1;
 
-    if len(moves)==0: #terminal state
-        return compute_utility(board,opponent_color);
-    else:
-        v = sys.maxsize;
-        for move in moves:
-            new_board = play_move(board,color,move[0],move[1]);
-            v = min(v,alphabeta_max_node(new_board,opponent_color,alpha,beta));
-            if (v <= alpha):
-                return v;
-            beta = min(beta,v);
-    return v
+        if len(moves)==0: #terminal state
+            utility = compute_utility(board,opponent_color);
+            minimax_dict[(board,color)] = utility;
+            return utility;
+        else:
+            v = sys.maxsize;
+
+            states = [];
+            for move in moves:
+                new_board = play_move(board,color,move[0],move[1]);
+                heappush(states,(-compute_utility(new_board,opponent_color),new_board));
+
+            while states:
+                new_board = (heappop(states))[1]
+                #new_board = play_move(board,color,move[0],move[1]);
+                v = min(v,alphabeta_max_node(new_board,opponent_color,alpha,beta));
+                if (v <= alpha):
+                    minimax_dict[(board,color)] = v;
+                    return v;
+                beta = min(beta,v);
+        minimax_dict[(board,color)] = v;
+        return v
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
 def alphabeta_max_node(board, color, alpha, beta):
-    moves = get_possible_moves(board,color);
-    if color == 1:
-        opponent_color = 2;
+    if (board,color) in minimax_dict:
+        return minimax_dict[(board,color)];
     else:
-        opponent_color = 1;
+        moves = get_possible_moves(board,color);
+        if color == 1:
+            opponent_color = 2;
+        else:
+            opponent_color = 1;
 
-    if len(moves)==0: #terminal state
-        return compute_utility(board,color);
-    else:
-        v = -sys.maxsize;
-        for move in moves:
-            new_board = play_move(board,color,move[0],move[1]);
-            v = max(v,alphabeta_min_node(new_board,opponent_color,alpha,beta));
-            if (v >= beta):
-                return v;
-            alpha = max(alpha,v);
-    return v
+        if len(moves)==0: #terminal state
+            utility = compute_utility(board,color);
+            minimax_dict[(board,color)] = utility;
+            return utility;
+        else:
+            v = -sys.maxsize;
+
+            states = [];
+            for move in moves:
+                new_board = play_move(board,color,move[0],move[1]);
+                heappush(states,(-compute_utility(new_board,color),new_board));
+
+            while states:
+                new_board = (heappop(states))[1]
+                #new_board = play_move(board,color,move[0],move[1]);
+                v = max(v,alphabeta_min_node(new_board,opponent_color,alpha,beta));
+                if (v >= beta):
+                    minimax_dict[(board,color)] = v;
+                    return v;
+                alpha = max(alpha,v);
+        minimax_dict[(board,color)] = v;
+        return v
 
 
 def select_move_alphabeta(board, color):
