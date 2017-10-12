@@ -158,5 +158,5 @@ if __name__ == "__main__":
     else:
         player1 = AiPlayerInterface(sys.argv[1],1)
         player2 = AiPlayerInterface(sys.argv[2],2)
-        game = OthelloGameManager(dimension=4)
+        game = OthelloGameManager(dimension=8)
         play_game(game, player1, player2)

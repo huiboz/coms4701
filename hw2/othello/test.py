@@ -9,6 +9,7 @@ building your AIs.
 """
 #import sys;
 
+test_dict = {};
 
 def get_score(board):
     p1_count = 0
@@ -53,22 +54,6 @@ def compute_utility(board, color):
 #print(board);
 #board = (tuple)board;
 #print(type(board));
-a = (board,1);
-
-
-dic = {};
-dic['0'] = 00;
-dic['1'] = 11;
-dic['0'] = 22;
-print(dic);
-
-states = [];
-print(type(states));
-#dic[((tuple)board, 1)] = 3;
-#print(type(dic));
-#print(dic);
-
-#print(move[0]);
-
-#for x in b:
-#    print(x);
+#test_dict['0'] = 00;
+#test_dict['1'] = 11;
+print (test_dict);
