@@ -3,7 +3,13 @@ import string
 
 
 def extract_words(text):
-    return None # should return a list of words in the data sample.
+    text = text.lower() # convert to lower case
+
+
+    for p in string.punctuation: # strip the punctuation
+        text = text.replace(p,"")
+
+    return text.split() # return a list splitting on white spaces
 
 
 class NbClassifier(object):
