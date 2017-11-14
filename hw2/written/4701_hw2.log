@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  6 OCT 2017 20:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  7 NOV 2017 21:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -196,79 +196,27 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 19.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 24--25
+) [1
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 26--27
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 28--30
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 28--30
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--33
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 34--35
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 40--42
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
-
- []
-
-[1
-
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] (./4701_hw2.aux) ) 
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./4701
+_hw2.aux) ) 
 Here is how much of TeX's memory you used:
- 1735 strings out of 492995
- 21664 string characters out of 6132704
- 88720 words of memory out of 5000000
- 5302 multiletter control sequences out of 15000+600000
- 10737 words of font info for 41 fonts, out of 8000000 for 9000
+ 1730 strings out of 492995
+ 21580 string characters out of 6132704
+ 81720 words of memory out of 5000000
+ 5297 multiletter control sequences out of 15000+600000
+ 9489 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,9n,32p,508b,197s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb>
-Output written on 4701_hw2.pdf (2 pages, 72731 bytes).
+ 27i,6n,32p,226b,197s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
+pfb>
+Output written on 4701_hw2.pdf (1 page, 40614 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
+ 24 PDF objects out of 1000 (max. 8388607)
+ 16 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

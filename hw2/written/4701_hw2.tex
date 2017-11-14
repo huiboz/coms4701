@@ -14,7 +14,7 @@
 % --------------------------------------------------------------
  
 \title{COMS W4701: Artificial Intelligence\\
-       Written Homework 2}
+       Written Homework 3}
 \author{Huibo Zhao (hz2480)} % replace with your name and UNI
 \maketitle
 
@@ -47,43 +47,53 @@ AlphaGo combined different neural networks for evaluating the positions and move
 \section*{Problem 2}
 
 As shown below \newline
+
+
 \begin{table}[!h]
 \label{my-label}
 \begin{tabular}{llllll}
 step & node & $\alpha$  & $\beta$  & result & children skipped \\
-1    & A    & $-\infty$ & $\infty$  & $-\infty$     &                  \\
-2    & B    &  -$\infty$  & $\infty$      &         $\infty$         \\
-3    & E    & $-\infty$ & $\infty$  & 13     &                  \\
-4    & B    & -$\infty$ & 13 & 13     &                  \\
-5    & F    & -$\infty$ & 13 & 4      &                  \\
-6    & B    & -$\infty$ & 4  & 4      &                  \\
-7    & G    & -$\infty$ & 4  & 5      & 8                \\
-8    & B    & -$\infty$ & 4  & 4      &                  \\
-9    & A    & 4  & $\infty$  & 4      &                  \\
-10   & C    & 4  & $\infty$  & $\infty$      &                  \\
-11   & H    & -$\infty$  & $\infty$  & 15     &                  \\
-12   & C    & 4  & 15 & 15     &                  \\
-13   & I    & -$\infty$  & 15 & 7      &                  \\
-14   & C    & 4  & 7  & 7      &                  \\
-15   & J    & -$\infty$ & 7  & 16     & 4, -12           \\
-16   & C    & 4  & 7  & 7      &                  \\
-17   & A    & 7  & $\infty$  & 7      &                  \\
-18   & D    & 7  & $\infty$  & $\infty$      &                  \\
-19   & K    & -$\infty$  & $\infty$  & 11     &                  \\
-20   & D    & 7  & 11 & 11     &                  \\
-21   & L    & -$\infty$  & 11 & 12     & 13, -15          \\
-22   & D    & 7  & 11 & 11     &                  \\
-23   & M    & -$\infty$  & 11 & 19     &                  \\
-24   & D    & 7  & 11 & 11     &                  \\
-25   & A    & 11 & $\infty$  & 11     &                 
+1    & A    & -$\infty$ & $\infty$  & 11     &                  \\
+2    & B    & -$\infty$ & $\infty$  & 4      &                  \\
+3    & E    & 13 & $\infty$  & 13     &                  \\
+4    & F    & -$\infty$& 13 & 4      &                  \\
+5    & G    & -$\infty$ & 4  & 5      & 8                \\
+6    & C    & 4  & $\infty$  & 7      &                  \\
+7    & H    & 4  & $\infty$  & 15     &                  \\
+8    & I    & 4  & 15 & 7      &                  \\
+9    & J    & 4  & 7  & 16     & 4,-12            \\
+10   & D    & 7  & -$\infty$ & 11     &                  \\
+11   & K    & 7  & -$\infty$ & 11     &                  \\
+12   & L    & 7  & 11 & 12     & 13,-15           \\
+13   & M    & 7  & 11 & 19     &                 
 \end{tabular}
 \end{table}
 
 
 \section*{Problem 3}
 
+1. \newline
+The variables are 1,2,3,4,5 corresponding to the 5 classes.\newline
+The values are A,B,C corresponding to the 3 professors.\newline
+The domain for class 1 is [A] \newline
+The domain for class 2 is [A,B] \newline
+The domain for class 3 is [A,B,C] \newline
+The domain for class 4 is [A,B,C] \newline
+The domain for class 5 is [A,B] \newline
+The constraint is due to the time conflict between the classes \newline
+That is  $1\neq 2, 2\neq3, 3\neq4, 2\neq4, 3\neq5, 4\neq5$ \newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
 
 
+\section*{Problem 4}
+We introduce the auxiliary variable X. The domain for X contains all valid sets of 3-value tuple corresponding to A+B=C. So for any tuple in X, the binary constraint is that A is the first element of that tuple, B is the second element and C is the third element. By picking element A, B or C, we will reduce the domain of X and lastly there will be only tuple(s) that satisfied all 3 binary constraints left. \newline
+
+\noindent For constraints involving more than three variables, the problem can be treated similarly. Assume there are n variables involved, we can turn that into n binary constraints between a new auxiliary variable. The domain for the new auxiliary variables contains all valid sets of n-value tuple that satisfy that single constraint.\newline
 
 
 % --------------------------------------------------------------
