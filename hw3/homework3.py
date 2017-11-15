@@ -1,3 +1,22 @@
+'''
+original test with c = 1 k = 1
+on dev.txt: Precision:0.9508196721311475
+Recall:0.8656716417910447 F-Score:0.9062499999999999 Accuracy:0.9784560143626571
+on test.txt: Precision:0.9491525423728814
+Recall:0.8888888888888888 F-Score:0.9180327868852458 Accuracy:0.9820466786355476
+'''
+
+'''
+after tuning test with c = 0.08 k = 1
+on dev.txt: Precision:0.9672131147540983
+Recall:0.8805970149253731 F-Score:0.9218749999999999 Accuracy:0.9820466786355476
+on test.txt: Precision:0.9655172413793104
+Recall:0.8888888888888888 F-Score:0.9256198347107438 Accuracy:0.9838420107719928
+'''
+
+
+
+
 import sys
 import string
 import math
@@ -44,7 +63,7 @@ class NbClassifier(object):
         self.attribute_types = vocabulary
 
     def train(self, training_filename):
-        c = 1
+        c = 0.08
         vocabulary_size = len(self.attribute_types)
 
         ham_dic = {}
