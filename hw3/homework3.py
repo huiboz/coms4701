@@ -20,7 +20,6 @@ Recall:0.8888888888888888 F-Score:0.9256198347107438 Accuracy:0.9838420107719928
 import sys
 import string
 import math
-import re
 
 def extract_words(text):
     text = text.lower() # convert to lower case
@@ -38,6 +37,7 @@ class NbClassifier(object):
         self.attribute_types = set()
         self.label_prior = {}
         self.word_given_label = {}
+        self.stopword_file = stopword_file
 
         self.collect_attribute_types(training_filename, 1)
         self.train(training_filename)
@@ -59,6 +59,17 @@ class NbClassifier(object):
         for key in count_dic:
             if (count_dic[key] >= k):
                 vocabulary.add(key)
+
+        stop = set()
+        with open(self.stopword_file,'r') as f:
+            for line in f:
+                line = line.strip()
+                list_line = extract_words(line)
+                stop.add(list_line.pop(0))
+
+        for stop_word in stop:
+            if stop_word in vocabulary:
+                vocabulary.remove(stop_word)
 
         self.attribute_types = vocabulary
 
@@ -167,6 +178,6 @@ def print_result(result):
 
 if __name__ == "__main__":
 
-    classifier = NbClassifier(sys.argv[1])
+    classifier = NbClassifier(sys.argv[1],sys.argv[3])
     result = classifier.evaluate(sys.argv[2])
     print_result(result)
