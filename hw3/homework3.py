@@ -81,16 +81,21 @@ class NbClassifier(object):
 
 
         for key in ham_dic:
+            temp_tuple = (key,'ham')
+            count = c
             if key in self.attribute_types:
-                temp_tuple = (key,'ham')
-                self.word_given_label[temp_tuple] = (ham_dic[key]+c) /
-                                        (ham_word_count + c * vocabulary_size)
+                count = ham_dic[key] + c
+            self.word_given_label[temp_tuple] = (count) /
+                                    (ham_word_count + c * vocabulary_size)
+
 
         for key in spam_dic:
+            temp_tuple = (key,'spam')
+            count = c
             if key in self.attribute_types:
-                temp_tuple = (key,'spam')
-                self.word_given_label[temp_tuple] = (spam_dic[key] + c) /
-                                        (spam_word_count + c * vocabulary_size)
+                count = spam_dic[key] + c
+            self.word_given_label[temp_tuple] = (count) /
+                                    (spam_word_count + c * vocabulary_size)
 
 
     def predict(self, text):
