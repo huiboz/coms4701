@@ -1,7 +1,7 @@
 import sys
 import string
 import math
-
+import re
 
 def extract_words(text):
     text = text.lower() # convert to lower case
@@ -98,17 +98,48 @@ class NbClassifier(object):
 
     def predict(self, text):
         list_line = extract_words(text)
-        label = list_line.pop(0)
+        p_ham = math.log(self.label_prior['ham'])
+        p_spam = math.log(self.label_prior['spam'])
 
-        return {} #replace this
+        for word in list_line:
+            if (word in self.attribute_types):
+                p_ham = p_ham + math.log(self.word_given_label[(word,'ham')])
+                p_spam = p_spam + math.log(self.word_given_label[(word,'spam')])
+
+
+        if p_spam > p_ham:
+            return 'spam'
+        else:
+            return 'ham'
 
 
     def evaluate(self, test_filename):
-        precision = 0.0
-        recall = 0.0
-        fscore = 0.0
-        accuracy = 0.0
+        TP = 0
+        FP = 0
+        FN = 0
+        TN = 0
+        with open(test_filename,'r') as f:
+            for line in f:
+                line = line.strip()
+                label = line.split('\t')[0]
+                text = line.split('\t')[1]
+
+
+                if (self.predict(text) == 'spam' and label == 'spam'):
+                    TP = TP + 1
+                elif (self.predict(text) == 'ham' and label == 'ham'):
+                    TN = TN + 1
+                elif (self.predict(text) == 'ham' and label == 'spam'):
+                    FN = FN + 1
+                elif (self.predict(text) == 'spam' and label == 'ham'):
+                    FP = FP + 1
+
+        precision = TP / (TP + FP)
+        recall = TP / (TP + FN)
+        fscore = 2 * precision * recall / (precision + recall)
+        accuracy = (TP + TN) / (TP + TN + FN + FP)
         return precision, recall, fscore, accuracy
+
 
 
 def print_result(result):
