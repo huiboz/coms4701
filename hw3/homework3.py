@@ -1,5 +1,6 @@
 import sys
 import string
+import math
 
 
 def extract_words(text):
@@ -52,7 +53,7 @@ class NbClassifier(object):
         spam_count = 0
         ham_word_count = 0
         spam_word_count = 0
-        with open('dev.txt','r') as f:
+        with open(training_filename,'r') as f:
             for line in f:
                 line = line.strip()
                 list_line = extract_words(line)
@@ -61,44 +62,44 @@ class NbClassifier(object):
                 if first_word == 'ham':
                     ham_count = ham_count + 1
                     for word in list_line:
-                        if (word in ham_dic):
-                            ham_dic[word] = ham_dic[word] + 1
-                        else:
-                            ham_dic[word] = 1
-                        ham_word_count = ham_word_count + 1
+                        if (word in self.attribute_types):
+                            if (word in ham_dic):
+                                ham_dic[word] = ham_dic[word] + 1
+                            else:
+                                ham_dic[word] = 1
+                            ham_word_count = ham_word_count + 1
+
                 if first_word == 'spam':
                     spam_count = spam_count + 1
                     for word in list_line:
-                        if (word in spam_dic):
-                            spam_dic[word] = spam_dic[word] + 1
-                        else:
-                            spam_dic[word] = 1
-                        spam_word_count = spam_word_count + 1
+                        if (word in self.attribute_types):
+                            if (word in spam_dic):
+                                spam_dic[word] = spam_dic[word] + 1
+                            else:
+                                spam_dic[word] = 1
+                            spam_word_count = spam_word_count + 1
 
         total_count = ham_count + spam_count
         self.label_prior['spam'] = spam_count / total_count
         self.label_prior['ham'] = ham_count / total_count
 
-
-        for key in ham_dic:
-            temp_tuple = (key,'ham')
-            count = c
-            if key in self.attribute_types:
-                count = ham_dic[key] + c
-            self.word_given_label[temp_tuple] = (count) /
+        for word in self.attribute_types:
+            ham_count = c
+            spam_count = c
+            if (word in ham_dic):
+                ham_count = ham_dic[word] + c
+            if (word in spam_dic):
+                spam_count = spam_dic[word] + c
+            self.word_given_label[(word,'ham')] = ham_count /     \
                                     (ham_word_count + c * vocabulary_size)
-
-
-        for key in spam_dic:
-            temp_tuple = (key,'spam')
-            count = c
-            if key in self.attribute_types:
-                count = spam_dic[key] + c
-            self.word_given_label[temp_tuple] = (count) /
+            self.word_given_label[(word,'spam')] = spam_count /     \
                                     (spam_word_count + c * vocabulary_size)
 
 
     def predict(self, text):
+        list_line = extract_words(text)
+        label = list_line.pop(0)
+
         return {} #replace this
 
 
