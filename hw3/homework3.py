@@ -19,7 +19,6 @@ class NbClassifier(object):
         self.label_prior = {}
         self.word_given_label = {}
 
-
         self.collect_attribute_types(training_filename, 1)
         self.train(training_filename)
 
@@ -44,25 +43,55 @@ class NbClassifier(object):
         self.attribute_types = vocabulary
 
     def train(self, training_filename):
-        ################### label_prior #####################
-        label_dic = {}
-        with open(training_filename,'r') as f:
+        c = 1
+        vocabulary_size = len(self.attribute_types)
 
+        ham_dic = {}
+        spam_dic = {}
+        ham_count = 0
+        spam_count = 0
+        ham_word_count = 0
+        spam_word_count = 0
+        with open('dev.txt','r') as f:
             for line in f:
                 line = line.strip()
-                first_word = line.split()[0]
+                list_line = extract_words(line)
+                first_word = list_line.pop(0)
+
                 if first_word == 'ham':
                     ham_count = ham_count + 1
+                    for word in list_line:
+                        if (word in ham_dic):
+                            ham_dic[word] = ham_dic[word] + 1
+                        else:
+                            ham_dic[word] = 1
+                        ham_word_count = ham_word_count + 1
                 if first_word == 'spam':
                     spam_count = spam_count + 1
+                    for word in list_line:
+                        if (word in spam_dic):
+                            spam_dic[word] = spam_dic[word] + 1
+                        else:
+                            spam_dic[word] = 1
+                        spam_word_count = spam_word_count + 1
 
         total_count = ham_count + spam_count
-        label_dic['spam'] = spam_count / total_count
-        label_dic['ham'] = ham_count / total_count
-        self.label_prior = label_dic
-        #################################################
+        self.label_prior['spam'] = spam_count / total_count
+        self.label_prior['ham'] = ham_count / total_count
 
-        self.word_given_label = {} #replace this
+
+        for key in ham_dic:
+            if key in self.attribute_types:
+                temp_tuple = (key,'ham')
+                self.word_given_label[temp_tuple] = (ham_dic[key]+c) /
+                                        (ham_word_count + c * vocabulary_size)
+
+        for key in spam_dic:
+            if key in self.attribute_types:
+                temp_tuple = (key,'spam')
+                self.word_given_label[temp_tuple] = (spam_dic[key] + c) /
+                                        (spam_word_count + c * vocabulary_size)
+
 
     def predict(self, text):
         return {} #replace this
