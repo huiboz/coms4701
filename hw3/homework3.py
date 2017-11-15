@@ -84,15 +84,15 @@ class NbClassifier(object):
         self.label_prior['ham'] = ham_count / total_count
 
         for word in self.attribute_types:
-            ham_count = c
-            spam_count = c
+            ham_word = c
+            spam_word = c
             if (word in ham_dic):
-                ham_count = ham_dic[word] + c
+                ham_word = ham_dic[word] + c
             if (word in spam_dic):
-                spam_count = spam_dic[word] + c
-            self.word_given_label[(word,'ham')] = ham_count /     \
+                spam_word = spam_dic[word] + c
+            self.word_given_label[(word,'ham')] = ham_word /     \
                                     (ham_word_count + c * vocabulary_size)
-            self.word_given_label[(word,'spam')] = spam_count /     \
+            self.word_given_label[(word,'spam')] = spam_word /     \
                                     (spam_word_count + c * vocabulary_size)
 
 
