@@ -24,10 +24,44 @@ class NbClassifier(object):
         self.train(training_filename)
 
     def collect_attribute_types(self, training_filename, k):
-        self.attribute_types = set() # replace this
+        count_dic = {}
+        vocabulary = set()
+        with open(training_filename,'r') as f:
+            for line in f:
+                line = line.strip()
+                list_line = extract_words(line)
+                list_line.pop(0) # remove the first word 'ham' or 'spam'
+                for word in list_line:
+                    if (word in count_dic):
+                        count_dic[word] = count_dic[word] + 1
+                    else:
+                        count_dic[word] = 1
+
+        for key in count_dic:
+            if (count_dic[key] >= k):
+                vocabulary.add(key)
+
+        self.attribute_types = vocabulary
 
     def train(self, training_filename):
-        self.label_prior = {} # replace this
+        ################### label_prior #####################
+        label_dic = {}
+        with open(training_filename,'r') as f:
+
+            for line in f:
+                line = line.strip()
+                first_word = line.split()[0]
+                if first_word == 'ham':
+                    ham_count = ham_count + 1
+                if first_word == 'spam':
+                    spam_count = spam_count + 1
+
+        total_count = ham_count + spam_count
+        label_dic['spam'] = spam_count / total_count
+        label_dic['ham'] = ham_count / total_count
+        self.label_prior = label_dic
+        #################################################
+
         self.word_given_label = {} #replace this
 
     def predict(self, text):
