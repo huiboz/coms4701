@@ -1,0 +1,83 @@
+% --------------------------------------------------------------
+% Basic LaTeX template for homework assignments. 
+% COMS W4701 - Artificial Intelligence 
+% --------------------------------------------------------------
+\documentclass[11pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumerate}
+
+
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{listings}
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\graphicspath{ {/Users/apple/Desktop/4701/hw/coms4701/hw4} }
+
+ 
+\begin{document}
+ 
+%           Your solutions start below this line
+% --------------------------------------------------------------
+ 
+\title{COMS W4701: Artificial Intelligence\\
+       Written Homework 4}
+\author{Huibo Zhao (hz2480)} % replace with your name and UNI
+\maketitle
+
+\section*{Problem 1} 
+
+Why does AlexNet use RelUs instead of sigmoid activation functions?  \newline
+
+Generally speaking, ReLUs train faster and we indeed need such a fast learning network because of the large datasets we have. As stated in article, the standard way to model a neuron's output is tanh or sigmoid function and they are slower than neurons with ReLUs. When reaching the same training error, the neurons with ReLUs take fewer iterations. \newline
+ 
+\noindent What is drop-out? What problem is addressed by this technique and why does it help system performance? \newline
+
+According to the article, dropout refers to a technique "consisting of setting to zero the output of each hidden neuron with probability 0.5".  The neurons that are dropped out will not be engaged in forward pass and back propagation anymore. \newline
+
+It reduces overfitting. \newline
+
+It helps system performance. Normally, we could combine the predictions of many different models for reducing test errors but that is an expensive method for big neural networks. Instead, dropout will only cost approximately a factor of two for training. \newline
+
+\noindent What is data augmentation? What problem is addressed by this technique and why does it help system performance? \newline
+
+Data augmentation refers to "artificially enlarging the dataset using label-preserving transformations". In this article, two forms of data augmentation are introduced. The first form involves extracting random patches and training network on these extracted patches and increase the size of our training set. During the test time, the network makes prediction by extracting ten patches (five patches plus their horizontal reflections) and averaging the predictions on the ten patches. The second form involves altering RGB intensities on training data. It adds multiples of the found principal components to each training image. \newline
+
+It also reduces overfitting. \newline
+
+As stated in article, the second form reduces the top-1 error rate by over 1 percent. Additionally, both the two forms produce transformed with little computation and we don't need to store those transformed images on disk. We consider it to be very little computation because the transformed images are generated on CPU while the training process is done on GPU with previous batch of images. \newline
+
+\clearpage
+
+\section*{Problem 4}
+
+(a) \newline
+
+Suppose the output of the hidden layer with two neurons is g(x) = $w_{1}x + d_{1} + w_{2}x + d_{2}$, then the output for output layer is $w_{3}g(x) + d_{3}$ when can be simplified as $(w_{3}w_{1}+w_{3}w_{2})x+w_{3}d_{1}+w_{3}d_{2}+d_{3}$. If we let w = $w_{3}w_{1}+w_{3}w_{2}$ and d = $w_{3}d_{1}+w_{3}d_{2}+d_{3}$, this is the network with no hidden units but computes the same function. \newline
+
+\noindent (b) \newline
+
+When we have more than n hidden layers, it is the same thing because of the linear activation function. Basically, when we applied a linear activation function to a linear function, the output is still a linear form. The weight factor w will "cumulate in front of a" and the rest of terms will be added up together which can be regarded as a linear form \newline
+
+\noindent (c) \newline
+
+Before transformation, on the hidden layer, each neuron has n weights corresponding to the n inputs, and the hidden layer has total h neurons, so it has hn number of weights. On the output layer, each node has h weights corresponding to the h neurons, and the output layer has total n nodes, so it has hn number of weights. In total , it has 2hn number of weights. \newline
+
+After transformation, we have no hidden layer. For output layer, each node has n weights corresponding to the n inputs, and we have n nodes. So in total we have $n^2$ number of weights \newline
+
+When h $<<$ n, we can see that the network after transformation has much more number of weights than the original network. This result means using linear activation functions for network is generally not a good idea. \newline
+
+
+
+
+% --------------------------------------------------------------
+ 
+\end{document}
